@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Invoice</title><link rel="stylesheet" href="css/styles.css"/></head>
+<body>
+<main class="container">
+  <div id="invoiceArea"></div>
+  <div><button id="printBtn" class="primary">Print / Save as PDF</button></div>
+</main>
+<script src="js/store.js"></script>
+<script>
+function q(name){ const u=new URLSearchParams(location.search); return u.get(name); }
+async function loadInvoice(){ const id=q('order'); if(!id){ document.getElementById('invoiceArea').innerHTML='<p>Order id missing.</p>'; return; }
+  const orders = JSON.parse(localStorage.getItem('shop_orders_v1')||'[]');
+  const order = orders.find(o=>o.id===id);
+  if(!order){ document.getElementById('invoiceArea').innerHTML='<p>Order not found.</p>'; return; }
+  document.getElementById('invoiceArea').innerHTML = `
+    <div class="card invoice">
+      <h2>Invoice — Order ${order.id}</h2>
+      <div>Placed: ${new Date(order.date).toLocaleString()}</div>
+      <hr/>
+      <div><strong>Customer</strong><div>${order.name}</div><div>${order.email}</div><div>${order.address}</div></div>
+      <hr/>
+      <table class="invoice-table"><thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>
+      ${order.items.map(it=>`<tr><td>${it.name}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.qty*it.price}</td></tr>`).join('')}
+      </tbody></table>
+      <hr/>
+      <div class="row"><div>Subtotal: ₹${order.subtotal}</div><div>Shipping: ₹${order.shipping}</div><div>Total: ₹${order.total}</div></div>
+    </div>`;
+}
+document.getElementById('printBtn').onclick = ()=>window.print();
+loadInvoice();
+</script>
+</body></html>

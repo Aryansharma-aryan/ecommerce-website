@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Checkout</title><link rel="stylesheet" href="css/styles.css"/></head>
+<body>
+<header class="site-header"><div class="container header-row"><a class="logo" href="index.html">ShopNest</a></div></header>
+<main class="container">
+  <h2>Checkout</h2>
+  <div id="checkoutSummary"></div>
+  <form id="checkoutForm" class="card">
+    <label>Full name <input name="name" required/></label>
+    <label>Email <input type="email" name="email" required/></label>
+    <label>Phone <input name="phone" required/></label>
+    <label>Address <textarea name="address" required></textarea></label>
+    <label>Payment method
+      <select name="payment"><option value="card">Card</option><option value="upi">UPI</option><option value="cod">Cash on Delivery</option></select>
+    </label>
+    <button class="primary" type="submit">Place Order</button>
+  </form>
+</main>
+<footer class="site-footer"><div class="container">© 2025 ShopNest</div></footer>
+<div id="alert" class="alert hidden"></div>
+<script src="js/store.js"></script>
+<script src="js/checkout.js"></script>
+</body>
+</html>
